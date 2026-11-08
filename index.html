@@ -179,9 +179,15 @@ badge.style.marginTop = "6px";
    };
 
   document.body.appendChild(appleScript);
-  if (!data.results || data.results.length === 0) {
-  result.textContent =
-    "Apple не возвращает приложение в каталоге этой страны. Это не подтверждает возможность или невозможность восстановления из истории загрузок.";
+ }
+let recoveryScript = null;
+function checkRecovery() { const id = document.getElementById("recoveryId").value.trim(); const country = document.getElementById("recoveryCountry").value; const result = document.getElementById("recoveryResult");
+if (!id) { result.textContent = "Введи Apple ID приложения."; return; }
+result.textContent = "Проверяем Apple...";
+if (recoveryScript) recoveryScript.remove();
+window.recoveryLookupCallback = function(data) { result.innerHTML = "";
+if (!data.results || data.results.length === 0) {
+  result.textContent = "Apple не нашла приложение в этом регионе.";
   return;
 }
 
@@ -190,25 +196,22 @@ const app = data.results[0];
 const name = document.createElement("p");
 name.textContent = "Приложение: " + app.trackName;
 
-const developer = document.createElement("p");
-developer.textContent = "Издатель: " + app.sellerName;
+const dev = document.createElement("p");
+dev.textContent = "Издатель: " + app.sellerName;
 
-const status = document.createElement("p");
-status.textContent = "Apple нашла приложение по этому ID.";
-
-result.append(name, developer, status);
+result.append(name, dev);
 
 if (app.trackViewUrl) {
   const link = document.createElement("a");
   link.href = app.trackViewUrl;
   link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.textContent = "Открыть страницу Apple";
+  link.textContent = "Открыть в App Store";
   result.append(link);
 }
-
-}
-
+};
+recoveryScript = document.createElement("script"); recoveryScript.src = "https://itunes.apple.com/lookup?id=" + encodeURIComponent(id) + "&country=" + encodeURIComponent(country) + "&callback=recoveryLookupCallback";
+recoveryScript.onerror = function() { result.textContent = "Ошибка соединения с Apple."; };
+document.body.appendChild(recoveryScript); }
 </script>
 </body>
 </html>
