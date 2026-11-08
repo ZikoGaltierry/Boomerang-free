@@ -179,7 +179,36 @@ badge.style.marginTop = "6px";
    };
 
   document.body.appendChild(appleScript);
+  if (!data.results || data.results.length === 0) {
+  result.textContent =
+    "Apple не возвращает приложение в каталоге этой страны. Это не подтверждает возможность или невозможность восстановления из истории загрузок.";
+  return;
 }
+
+const app = data.results[0];
+
+const name = document.createElement("p");
+name.textContent = "Приложение: " + app.trackName;
+
+const developer = document.createElement("p");
+developer.textContent = "Издатель: " + app.sellerName;
+
+const status = document.createElement("p");
+status.textContent = "Apple нашла приложение по этому ID.";
+
+result.append(name, developer, status);
+
+if (app.trackViewUrl) {
+  const link = document.createElement("a");
+  link.href = app.trackViewUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "Открыть страницу Apple";
+  result.append(link);
+}
+
+}
+
 </script>
 </body>
 </html>
