@@ -73,7 +73,34 @@ footer{text-align:center;margin:35px;color:#777987;font-size:12px}
   
 <footer>BOOMERANG FREE · 2026</footer>
 </div>
+<section class="panel" style="margin-top:20px">
+  <h2>Проверка восстановления приложения</h2>
+  <p>Проверим, возвращает ли Apple данные приложения.</p>
 
+  <input id="recoveryId" type="number"
+    placeholder="Apple ID приложения"
+    value="564177498"
+    style="width:100%;padding:13px;border-radius:10px;
+    background:#17171f;color:white;border:1px solid #444">
+
+  <select id="recoveryCountry"
+    style="width:100%;padding:13px;margin-top:10px;
+    background:#17171f;color:white;border-radius:10px">
+    <option value="us">США</option>
+    <option value="ru">Россия</option>
+    <option value="tr">Турция</option>
+    <option value="de">Германия</option>
+  </select>
+
+  <button onclick="checkRecovery()"
+    style="width:100%;padding:13px;margin-top:10px;
+    background:#8b45c6;color:white;border:0;border-radius:10px">
+    Проверить восстановление
+  </button>
+
+  <div id="recoveryResult" style="margin-top:15px"></div>
+</section>
+  
 <script>
 let appleScript = null;
 
