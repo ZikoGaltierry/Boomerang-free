@@ -98,43 +98,75 @@ footer{margin:35px 0;text-align:center;color:#777987;font-size:12px}
 </div>
 
 <script>
-if (!data.results || data.results.length === 0) {
-  result.textContent = "В этом регионе приложение не найдено.";
-  return;
+<script>
+let appleSearchScript = null;
+
+function searchApp() {
+  const value = document.getElementById("search").value.trim();
+  const result = document.getElementById("result");
+
+  if (!value) {
+    result.textContent = "Введи название приложения.";
+    return;
+  }
+
+  result.textContent = "Ищем приложение...";
+
+  if (appleSearchScript) appleSearchScript.remove();
+
+  window.appleSearchCallback = function(data) {
+    result.innerHTML = "";
+
+    if (!data.results || data.results.length === 0) {
+      result.textContent = "Приложение не найдено в американском App Store.";
+      return;
+    }
+
+    data.results.forEach(app => {
+      const card = document.createElement("div");
+      card.style.cssText =
+        "display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #30313c;align-items:center";
+
+      const icon = document.createElement("img");
+      icon.src = app.artworkUrl100 || "";
+      icon.style.cssText =
+        "width:58px;height:58px;border-radius:13px;object-fit:cover";
+
+      const info = document.createElement("div");
+
+      const name = document.createElement("div");
+      name.textContent = app.trackName;
+      name.style.fontWeight = "700";
+
+      const developer = document.createElement("div");
+      developer.textContent = app.sellerName || "Разработчик не указан";
+      developer.style.cssText = "font-size:13px;color:#aaa;margin:5px 0";
+
+      const link = document.createElement("a");
+      link.href = app.trackViewUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Открыть в App Store";
+      link.style.color = "#bd79e8";
+
+      info.append(name, developer, link);
+      card.append(icon, info);
+      result.append(card);
+    });
+  };
+
+  appleSearchScript = document.createElement("script");
+  appleSearchScript.src =
+    "https://itunes.apple.com/search?term=" +
+    encodeURIComponent(value) +
+    "&country=us&entity=software&limit=15&callback=appleSearchCallback";
+
+  appleSearchScript.onerror = function() {
+    result.textContent = "Ошибка подключения к Apple. Попробуй ещё раз.";
+  };
+
+  document.body.appendChild(appleSearchScript);
 }
-
-data.results.forEach(app => {
-  const card = document.createElement("div");
-  card.style.cssText =
-    "display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #30313c;align-items:center";
-
-  const icon = document.createElement("img");
-  icon.src = app.artworkUrl100 || "";
-  icon.style.cssText =
-    "width:58px;height:58px;border-radius:13px;object-fit:cover";
-
-  const info = document.createElement("div");
-
-  const name = document.createElement("div");
-  name.textContent = app.trackName;
-  name.style.fontWeight = "700";
-
-  const developer = document.createElement("div");
-  developer.textContent = app.sellerName || "Разработчик не указан";
-  developer.style.cssText = "font-size:13px;color:#aaa;margin:5px 0";
-
-  const link = document.createElement("a");
-  link.href = app.trackViewUrl;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.textContent = "Открыть в App Store";
-  link.style.color = "#bd79e8";
-
-  info.append(name, developer, link);
-  card.append(icon, info);
-  result.append(card);
-});
-
 </script>
 </body>
 </html>
