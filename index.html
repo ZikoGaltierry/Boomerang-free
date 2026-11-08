@@ -251,7 +251,7 @@ document.body.appendChild(recoveryScript); }
 script.src = "https://itunes.apple.com/lookup?id=686449807,389801252,835599320,564177498&country=us&callback=boomerangCatalogCallback";
 document.body.appendChild(script); }
 window.boomerangCatalogCallback = function(data) { const apps = data.results || [];
-document.querySelectorAll(".panel h3").forEach(title => { const card = title.parentElement; const app = apps.find(a => a.trackName.toLowerCase() === title.textContent.trim().toLowerCase() );
+document.querySelectorAll(".panel h3").forEach(title => { const card = title.parentElement; const app = apps.find(a => a.trackName.toLowerCase().includes(title.textContent.trim().toLowerCase())
 if (!app) return;
 
 let img = card.querySelector("img");
