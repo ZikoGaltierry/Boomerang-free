@@ -94,9 +94,23 @@ function searchApp() {
       name.textContent = app.trackName;
       name.style.fontWeight = "bold";
 
-      const developer = document.createElement("div");
-      developer.textContent = app.sellerName || "Разработчик не указан";
-      developer.style.cssText = "font-size:13px;color:#aaa;margin:5px 0";
+     const developer = document.createElement("div");
+developer.textContent = "Разработчик: " + (app.sellerName || "не указан");
+developer.style.cssText = "font-size:13px;color:#aaa;margin:5px 0";
+
+const badge = document.createElement("div");
+const publisher = (app.sellerName || "").trim().toLowerCase();
+
+if (publisher === "vk llc" || publisher === "v kontakte ooo") {
+  badge.textContent = "Издатель совпадает с VK";
+  badge.style.color = "#72d69a";
+} else {
+  badge.textContent = "Сторонний издатель";
+  badge.style.color = "#e6b66d";
+}
+
+badge.style.fontSize = "12px";
+badge.style.marginTop = "6px";
 
       const link = document.createElement("a");
       link.href = app.trackViewUrl;
