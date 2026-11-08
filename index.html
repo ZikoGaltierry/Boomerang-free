@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101116">
+<title>Boomerang Free</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#101116;color:#f5f5f7;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ min-height:100vh;padding:24px 18px;
+}
+.container{max-width:600px;margin:0 auto}
+header{display:flex;align-items:center;gap:12px;margin:18px 0 55px}
+.logo{
+ width:45px;height:45px;border-radius:14px;
+ background:#b66de5;display:grid;place-items:center;
+ color:#17121c;font-size:27px;font-weight:900
+}
+.brand{font-size:21px;font-weight:750}
+.brand span{color:#bd79e8}
+h1{font-size:36px;line-height:1.15;margin:0 0 14px}
+p{color:#a5a5b2;line-height:1.6}
+.search{
+ display:flex;gap:10px;margin:28px 0 18px;
+}
+input{
+ min-width:0;flex:1;padding:16px;border-radius:13px;
+ border:1px solid #343541;background:#1b1c24;
+ color:white;font-size:16px;outline:none;
+}
+button{
+ border:0;border-radius:13px;padding:0 19px;
+ background:#bd79e8;color:#17121c;
+ font-weight:700;font-size:15px;
+}
+.panel{
+ background:#191a22;border:1px solid #30313c;
+ border-radius:17px;padding:19px;margin-top:18px;
+}
+.panel h2{font-size:18px;margin:0 0 10px}
+.status{color:#d3a0f0;font-size:13px}
+.app{
+ display:flex;align-items:center;gap:13px;
+ padding:14px 0;border-bottom:1px solid #30313c;
+}
+.app:last-child{border:0}
+.app-icon{
+ width:47px;height:47px;border-radius:12px;
+ display:grid;place-items:center;background:#252b40;
+ font-size:23px
+}
+.app-name{font-weight:650}
+.app-desc{font-size:13px;color:#999ba8;margin-top:5px}
+footer{margin:35px 0;text-align:center;color:#777987;font-size:12px}
+.notice{font-size:13px;color:#aaa}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+ <div class="logo">B</div>
+ <div class="brand">Boomerang <span>Free</span></div>
+</header>
+
+<main>
+ <h1>Твои приложения.<br>Снова с тобой.</h1>
+ <p>Проект по поиску и восстановлению приложений, которых больше нет в App Store.</p>
+
+ <div class="search">
+  <input id="search" type="text" placeholder="Название приложения...">
+  <button onclick="searchApp()">Найти</button>
+ </div>
+
+ <section class="panel">
+  <h2>Поиск приложений</h2>
+  <div id="result" class="notice">
+   Введи название приложения, чтобы начать поиск.
+  </div>
+ </section>
+
+ <section class="panel">
+  <h2>О проекте</h2>
+  <p>Мы работаем над бесплатным инструментом, который поможет находить доступные способы восстановления ранее загруженных приложений.</p>
+  <div class="status">● Проект находится в разработке</div>
+ </section>
+
+ <section class="panel">
+  <h2>Безопасность</h2>
+  <p class="notice">Boomerang Free не просит вводить пароль Apple Account, коды подтверждения или другие секретные данные.</p>
+ </section>
+</main>
+
+<footer>BOOMERANG FREE · 2026</footer>
+</div>
+
+<script>
+function searchApp(){
+ const value=document.getElementById('search').value.trim();
+ const result=document.getElementById('result');
+ if(!value){
+  result.textContent='Сначала введи название приложения.';
+  return;
+ }
+ result.textContent='Поиск «'+value+'» пока не подключён. Мы работаем над этой функцией.';
+}
+</script>
+</body>
+</html>
