@@ -247,6 +247,28 @@ if (app.trackViewUrl) {
 recoveryScript = document.createElement("script"); recoveryScript.src = "https://itunes.apple.com/lookup?id=" + encodeURIComponent(id) + "&country=" + encodeURIComponent(country) + "&callback=recoveryLookupCallback";
 recoveryScript.onerror = function() { result.textContent = "Ошибка соединения с Apple."; };
 document.body.appendChild(recoveryScript); }
+  function loadCatalogApps() { const script = document.createElement("script");
+script.src = "https://itunes.apple.com/lookup?id=686449807,389801252,835599320,564177498&country=us&callback=boomerangCatalogCallback";
+document.body.appendChild(script); }
+window.boomerangCatalogCallback = function(data) { const apps = data.results || [];
+document.querySelectorAll(".panel h3").forEach(title => { const card = title.parentElement; const app = apps.find(a => a.trackName.toLowerCase() === title.textContent.trim().toLowerCase() );
+if (!app) return;
+
+let img = card.querySelector("img");
+
+if (!img) {
+  img = document.createElement("img");
+  img.width = 60;
+  card.prepend(img);
+}
+
+img.src = app.artworkUrl100;
+img.alt = app.trackName;
+
+const developer = card.querySelector("p");
+if (developer) developer.textContent = app.sellerName;
+}); };
+loadCatalogApps();
 </script>
 </body>
 </html>
